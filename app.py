@@ -11,7 +11,6 @@ from sklearn.neighbors import NearestNeighbors
 
 # Doesn't work lads
 # client = genai.Client(api_key="AIzaSyAZCYXKPt7mG6diaVhE-imbjEHpd_WHYO0")
-HF_BASE = "https://huggingface.co/datasets/init-nj/ballers-dataset/tree/main/data"
 
 
 st.set_page_config(page_title="Find Ballers", layout="wide", page_icon="🔍")
@@ -52,8 +51,8 @@ header[data-testid="stHeader"] {
 
 @st.cache_data(show_spinner = "Loading Player Database from Huggingface......")
 def load_data():
-    appearances = pd.read_csv('HF_BASE/appearances.csv')
-    players = pd.read_csv('HF_BASE/players.csv')
+    appearances = pd.read_csv('https://huggingface.co/datasets/init-nj/ballers-dataset/blob/main/data/appearances.csv')
+    players = pd.read_csv('https://huggingface.co/datasets/init-nj/ballers-dataset/blob/main/data/players.csv')
 
     agg = appearances.groupby('player_id').agg(
         total_goals=('goals', 'sum'),
