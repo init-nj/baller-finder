@@ -140,7 +140,7 @@ Be specific, cite the actual numbers, and write in the voice of a professional s
     for chunk in response:
         if chunk.text:
             yield chunk.text
-''''
+'''
 
 def make_radar(query_row, similar_df):
     cats = ['Goals/90','Assists/90','Cards/90','Mins/game','Age']
