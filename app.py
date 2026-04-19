@@ -101,55 +101,55 @@ def build_model(df):
     return knn, X_scaled, scaler
 
 
+# def generate_scout_report(query_row, similar_df):
+#     # 1. Prepare data
+#     similar_summary = "\n".join([
+#         f"- {row['name']} ({row['sub_position']}, Age {row['age']}): "
+#         f"{row['goals_p90']:.2f} G/90, {row['assists_p90']:.2f} A/90, "
+#         f"{int(row['total_appearances'])} apps, {row['similarity']:.0f}% match"
+#         for _, row in similar_df.iterrows()
+#     ])
+#
+#     prompt = f"""You are an elite football scout writing a concise professional report.
+#
+# QUERY PLAYER:
+# Name: {query_row['name']}
+# Position: {query_row['sub_position']}
+# Nationality: {query_row['country_of_citizenship']}
+# Age: {query_row['age']}
+# Goals/90: {query_row['goals_p90']:.2f}
+# Assists/90: {query_row['assists_p90']:.2f}
+# Total appearances: {int(query_row['total_appearances'])}
+# Total minutes: {int(query_row['total_minutes'])}
+#
+# SIMILAR PLAYERS FOUND BY THE RECOMMENDER:
+# {similar_summary}
+#
+# Write a 3-paragraph scout report:
+# 1. Profile the query player's statistical identity — what kind of player do the numbers suggest?
+# 2. Justify why each similar player was recommended — what statistical traits do they share?
+# 3. Flag anything notable — outliers, low-confidence players, age trajectories worth watching.
+#
+# Be specific, cite the actual numbers, and write in the voice of a professional scout."""
+#
+#     response = client.models.generate_content_stream(
+#         model='gemini-2.0-flash',
+#         contents=prompt
+#     )
+#
+#     for chunk in response:
+#         if chunk.text:
+#             yield chunk.text
 
-'''def generate_scout_report(query_row, similar_df):
-    # 1. Prepare data
-    similar_summary = "\n".join([
-        f"- {row['name']} ({row['sub_position']}, Age {row['age']}): "
-        f"{row['goals_p90']:.2f} G/90, {row['assists_p90']:.2f} A/90, "
-        f"{int(row['total_appearances'])} apps, {row['similarity']:.0f}% match"
-        for _, row in similar_df.iterrows()
-    ])
-
-    prompt = f"""You are an elite football scout writing a concise professional report.
-
-QUERY PLAYER:
-Name: {query_row['name']}
-Position: {query_row['sub_position']}
-Nationality: {query_row['country_of_citizenship']}
-Age: {query_row['age']}
-Goals/90: {query_row['goals_p90']:.2f}
-Assists/90: {query_row['assists_p90']:.2f}
-Total appearances: {int(query_row['total_appearances'])}
-Total minutes: {int(query_row['total_minutes'])}
-
-SIMILAR PLAYERS FOUND BY THE RECOMMENDER:
-{similar_summary}
-
-Write a 3-paragraph scout report:
-1. Profile the query player's statistical identity — what kind of player do the numbers suggest?
-2. Justify why each similar player was recommended — what statistical traits do they share?
-3. Flag anything notable — outliers, low-confidence players, age trajectories worth watching.
-
-Be specific, cite the actual numbers, and write in the voice of a professional scout."""
-    response = client.models.generate_content_stream(
-    model='gemini-2.0-flash',
-    contents=prompt
-)
-
-    for chunk in response:
-        if chunk.text:
-            yield chunk.text
-'''
 
 def make_radar(query_row, similar_df):
     cats = ['Goals/90','Assists/90','Cards/90','Mins/game','Age']
-    
+
     fig = go.Figure()
     colors = ['#00e5a0','#5a8cff','#ff6b6b','#ffd166','#c77dff']
 
     plot_players = pd.concat([query_row.to_frame().T, similar_df.head(3)], ignore_index=True)
-    all_data = load_data() 
+    all_data = load_data()
 
     for i, (_, row) in enumerate(plot_players.iterrows()):
         # 1. Calculate values (Normalization)
@@ -170,7 +170,7 @@ def make_radar(query_row, similar_df):
         fig.add_trace(go.Scatterpolar(
             r=vals + [vals[0]],           # vals[0] closes the radar loop
             theta=cats + [cats[0]],       # cats[0] closes the radar loop
-            fill='toself', 
+            fill='toself',
             name=row['name'],
             line=dict(color=colors[i], width=2),
             fillcolor=rgba_color if i > 0 else colors[i],
@@ -251,7 +251,7 @@ if query:
         with left:
             for rank, (_, row) in enumerate(similar.iterrows(), 1):
                 low_data_badge = '<span class="low-data">low data</span>' if row['low_confidence'] else ''
-                
+
                 card_html = (
                     f'<div class="result-card">'
                     f'<div style="display:flex;justify-content:space-between;align-items:flex-start">'
@@ -278,32 +278,32 @@ if query:
         with right:
             st.markdown('<p class="mono-label">Radar comparison</p>', unsafe_allow_html=True)
             st.plotly_chart(make_radar(query_row, similar), use_container_width=True)
-        '''
-        Out of comission ~No Credits Left :(
-                    Doesn't Work -> Ran out of Tokens!'
-        st.markdown("---")
-        st.markdown('<p class="mono-label">Scout report</p>', unsafe_allow_html=True)
-        
-        report_box = st.empty()
-        
-        with st.spinner(""):
-            full_text = ""
-            for chunk in generate_scout_report(query_row, similar):
-                full_text += chunk
-                report_box.markdown(f"""
-                <div style="background:#111318;border:1px solid #232730;border-radius:10px;
-                padding:20px 24px;font-size:14px;line-height:1.8;color:#c8cdd6;
-                font-family:'Barlow',sans-serif;border-left:3px solid #00e5a0;">
-                {full_text}▋
-                </div>
-                """, unsafe_allow_html=True)
-        
-        # Final render without cursor
-        report_box.markdown(f"""
-        <div style="background:#111318;border:1px solid #232730;border-radius:10px;
-        padding:20px 24px;font-size:14px;line-height:1.8;color:#c8cdd6;
-        font-family:'Barlow',sans-serif;border-left:3px solid #00e5a0;">
-        {full_text}
-        </div>
-        """, unsafe_allow_html=True)
-        '''
+
+        # Out of comission ~No Credits Left :(
+        # Doesn't Work -> Ran out of Tokens!
+        #
+        # st.markdown("---")
+        # st.markdown('<p class="mono-label">Scout report</p>', unsafe_allow_html=True)
+        #
+        # report_box = st.empty()
+        #
+        # with st.spinner(""):
+        #     full_text = ""
+        #     for chunk in generate_scout_report(query_row, similar):
+        #         full_text += chunk
+        #         report_box.markdown(f"""
+        #         <div style="background:#111318;border:1px solid #232730;border-radius:10px;
+        #         padding:20px 24px;font-size:14px;line-height:1.8;color:#c8cdd6;
+        #         font-family:'Barlow',sans-serif;border-left:3px solid #00e5a0;">
+        #         {full_text}▋
+        #         </div>
+        #         """, unsafe_allow_html=True)
+        #
+        # # Final render without cursor
+        # report_box.markdown(f"""
+        # <div style="background:#111318;border:1px solid #232730;border-radius:10px;
+        # padding:20px 24px;font-size:14px;line-height:1.8;color:#c8cdd6;
+        # font-family:'Barlow',sans-serif;border-left:3px solid #00e5a0;">
+        # {full_text}
+        # </div>
+        # """, unsafe_allow_html=True)
