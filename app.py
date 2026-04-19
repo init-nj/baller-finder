@@ -50,7 +50,7 @@ header[data-testid="stHeader"] {
 """, unsafe_allow_html=True)
 
 
-@st.cache_data(show spinner = "Loading Player Database from Huggingface......")
+@st.cache_data(show_spinner = "Loading Player Database from Huggingface......")
 def load_data():
     appearances = pd.read_csv('HF_BASE/appearances.csv')
     players = pd.read_csv('HF_BASE/players.csv')
