@@ -11,7 +11,7 @@ from sklearn.neighbors import NearestNeighbors
 
 # Doesn't work lads
 # client = genai.Client(api_key="AIzaSyAZCYXKPt7mG6diaVhE-imbjEHpd_WHYO0")
-HF_BASE = https://huggingface.co/datasets/init-nj/ballers-dataset/tree/main
+HF_BASE = "https://huggingface.co/datasets/init-nj/ballers-dataset/resolve/main"
 
 
 st.set_page_config(page_title="Find Ballers", layout="wide", page_icon="🔍")
