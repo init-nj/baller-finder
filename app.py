@@ -9,6 +9,11 @@ from sklearn.neighbors import NearestNeighbors
 #Doesn't work -Ran out of credits on the first day
 # client = genai.Client(api_key="AIzaSyAZCYXKPt7mG6diaVhE-imbjEHpd_WHYO0")
 
+# Doesn't work lads
+# client = genai.Client(api_key="AIzaSyAZCYXKPt7mG6diaVhE-imbjEHpd_WHYO0")
+HF_BASE = https://huggingface.co/datasets/init-nj/ballers-dataset/tree/main
+
+
 st.set_page_config(page_title="Find Ballers", layout="wide", page_icon="🔍")
 
 st.markdown("""
@@ -45,10 +50,10 @@ header[data-testid="stHeader"] {
 """, unsafe_allow_html=True)
 
 
-@st.cache_data
+@st.cache_data(show spinner = "Loading Player Database from Huggingface......")
 def load_data():
-    appearances = pd.read_csv('data/appearances.csv')
-    players = pd.read_csv('data/players.csv')
+    appearances = pd.read_csv('HF_BASE/appearances.csv')
+    players = pd.read_csv('HF_BASE/players.csv')
 
     agg = appearances.groupby('player_id').agg(
         total_goals=('goals', 'sum'),
@@ -273,9 +278,9 @@ if query:
         with right:
             st.markdown('<p class="mono-label">Radar comparison</p>', unsafe_allow_html=True)
             st.plotly_chart(make_radar(query_row, similar), use_container_width=True)
-
         '''
         Out of comission ~No Credits Left :(
+                    Doesn't Work -> Ran out of Tokens!'
         st.markdown("---")
         st.markdown('<p class="mono-label">Scout report</p>', unsafe_allow_html=True)
         
