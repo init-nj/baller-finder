@@ -5,9 +5,9 @@ import plotly.graph_objects as go
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.neighbors import NearestNeighbors
 
-from google import genai
-
-client = genai.Client(api_key="AIzaSyAZCYXKPt7mG6diaVhE-imbjEHpd_WHYO0")
+# from google import genai
+#Doesn't work -Ran out of credits on the first day
+# client = genai.Client(api_key="AIzaSyAZCYXKPt7mG6diaVhE-imbjEHpd_WHYO0")
 
 st.set_page_config(page_title="Find Ballers", layout="wide", page_icon="🔍")
 
@@ -274,6 +274,8 @@ if query:
             st.markdown('<p class="mono-label">Radar comparison</p>', unsafe_allow_html=True)
             st.plotly_chart(make_radar(query_row, similar), use_container_width=True)
 
+        '''
+        Out of comission ~No Credits Left :(
         st.markdown("---")
         st.markdown('<p class="mono-label">Scout report</p>', unsafe_allow_html=True)
         
@@ -299,3 +301,4 @@ if query:
         {full_text}
         </div>
         """, unsafe_allow_html=True)
+        '''
