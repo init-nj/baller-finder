@@ -50,7 +50,7 @@ header[data-testid="stHeader"] {
 
 @st.cache_data(show_spinner="Loading player database...")
 def load_data():
-    HF_BASE = "https://huggingface.co/datasets/init-nj/ballers-dataset/resolve/main"
+    HF_BASE = "https://huggingface.co/datasets/init-nj/ballers-dataset/resolve/main/data"
 
     appearances = pd.read_csv(f"{HF_BASE}/appearances.csv")
     players     = pd.read_csv(f"{HF_BASE}/players.csv")
