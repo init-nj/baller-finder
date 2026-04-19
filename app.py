@@ -48,11 +48,12 @@ header[data-testid="stHeader"] {
 </style>
 """, unsafe_allow_html=True)
 
-
-@st.cache_data(show_spinner = "Loading Player Database from Huggingface......")
+@st.cache_data(show_spinner="Loading player database...")
 def load_data():
-    appearances = pd.read_csv('https://huggingface.co/datasets/init-nj/ballers-dataset/blob/main/data/appearances.csv')
-    players = pd.read_csv('https://huggingface.co/datasets/init-nj/ballers-dataset/blob/main/data/players.csv')
+    HF_BASE = "https://huggingface.co/datasets/init-nj/ballers-dataset/resolve/main"
+
+    appearances = pd.read_csv(f"{HF_BASE}/appearances.csv")
+    players     = pd.read_csv(f"{HF_BASE}/players.csv")
 
     agg = appearances.groupby('player_id').agg(
         total_goals=('goals', 'sum'),
